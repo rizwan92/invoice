@@ -17,7 +17,7 @@ class MainLayout extends Component {
     this.setState({modalVisible: visible});
   }
 
-  render () {
+  render () {            
     return (
       <Container>
        <Header style={{backgroundColor: '#4CAF50'}}>
@@ -102,7 +102,7 @@ class MyModal extends Component {
     if (customerName === '') {this.makeToast('Enter Customer Name');return;}
     const customerNumber = this.state.customerNumber.trim()
     if (customerNumber === '') {this.makeToast('Enter Customer Number');return;} 
-    const customer = {customerName,customerNumber,shopId:this.props.shopId}
+    const customer = {customerName,customerNumber,shopId:this.props.shopId,createdAt:new Date()}
 
     console.log(customer);
 
@@ -118,7 +118,7 @@ class MyModal extends Component {
     })
   }
 
- render() {
+ render() {   
    return (
      <Modal
        animationType="slide"

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AsyncStorage,ScrollView, ActivityIndicator,Keyboard} from 'react-native'
 import {Toast,Container, Content, Text,View,Button,Input,Item} from 'native-base';
-import { NavigationActions } from 'react-navigation';
 import Meteor from 'react-native-meteor';
 export default class LoginLayout extends Component {
   constructor(props){
@@ -42,9 +41,13 @@ export default class LoginLayout extends Component {
           this.setState({loading:false})
           return
         }else {
-          AsyncStorage.setItem('shop_id',res.result._id);
-          //  this.props.navigation.navigate('Home',{shopId:res.result._id});
-          this.props.navigation.navigate('Home',{shopId:res.result._id});
+          AsyncStorage.setItem('shopId',res.result._id);
+          const logout = this.props.navigation.getParam('logout');
+          if (logout) {
+            this.props.navigation.navigate('Home');
+          }else{
+            this.props.navigation.navigate('App');
+          }
         }
       })
     })

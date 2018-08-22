@@ -6,16 +6,13 @@ import Search from './screens/search';
 import Customer from './screens/customer';
 import Login from './screens/login';
 import Registration from './screens/registration'
-import { Root, View, Text} from "native-base";
 import { createStackNavigator } from "react-navigation";
-import Meteor from 'react-native-meteor';
-import { AsyncStorage } from 'react-native'
 import Loader from './components/Loader';
-// Meteor.connect('ws://127.0.0.1:3000/websocket'); 
-Meteor.connect('ws://192.168.43.165:3000/websocket'); 
+import { AsyncStorage } from 'react-native'
+import { Root } from "native-base";
 
-const AppNavigator = (signedIn)=>{
-  return createStackNavigator(
+
+const  AppNavigator =  createStackNavigator(
   {
     Home: { screen: Home,
       navigationOptions: {header:null},
@@ -35,64 +32,42 @@ const AppNavigator = (signedIn)=>{
     Registration: { screen: Registration,
       navigationOptions: {},
      },
-  },
-  {
-    mode: "modal",
-    initialRouteName: signedIn ? "Home" : "Login"
   }
 );
-}
 
-export default class App extends Component {
-  state={
-    connect:false,
-    signedIn:false,
-    shopId:''
+
+
+ export default class App extends Component {
+
+  state = {
+    shopId: ''
   }
+
   componentDidMount = () => {
-    Meteor.ddp.on('connected', () => {
-      this.setState({connect:true})
-    });
-    Meteor.ddp.on('disconnected', () => {
-      this.setState({connect:false}) 
-    });
-    AsyncStorage.getItem('shop_id', (err, result) => {
-        if (result) {
-        this.setState({signedIn:true,shopId:result})
-      }else {
-        this.setState({signedIn:false})
-      }
-    })
-    
-  }
-  
-   
-  render() {
-    if (!this.state.connect) {
-      return  <Connect />
+    AsyncStorage.getItem('shopId', (err, result) => {
+      if (result) {            
+      this.setState({shopId:result})
+    }else {
+      this.props.navigation.navigate('Auth');
     }
-    const MyLayout = AppNavigator(this.state.signedIn)
-    if (!this.state.signedIn) {
+  })
+  };
+  
+
+  render() {
+    if (this.state.shopId === '') {
       return(
-        <Root>
-         <MyLayout />
-       </Root>
-      )
-    }else{
+        <Loader />
+      ); 
+    }    
     return (
       <Root>
-        {this.state.shopId === '' ? null : <MyLayout screenProps={{shopId:this.state.shopId}} />}
+      <AppNavigator screenProps={{shopId:this.state.shopId}} />
       </Root>
-    );
+    )
    }
   }
-}
 
-const Connect = ()=>{
-  return(
-    <View style={{display:'flex',flex:1,justifyContent:'center',alignItems:'center'}}>
-    <Text>Connecting</Text>
-    </View>
-  )
-}
+
+
 

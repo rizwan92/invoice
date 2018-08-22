@@ -8,27 +8,16 @@ export default function HomeContainerFunction (ComposedComponent) {
         if (!this.props.loading) {
             return <Loader />
         }
-        let shopId =null 
-        if (this.props.screenProps) {
-          shopId = this.props.screenProps.shopId
-        } else{
-          shopId = this.props.navigation.getParam('shop_id','')
-        }
-      return <ComposedComponent {...this.props} shopId={shopId} />;
+      
+      return <ComposedComponent {...this.props} shopId={this.props.screenProps.shopId}/>;
     }
   }
  
-  return  withTracker(params => {
-      let  handle = null;
-      if (params.screenProps) {
-           handle = Meteor.subscribe('allshopcustomer',params.screenProps.shopId); 
-        }else{
-            const shopId = params.navigation.getParam('shopId','');
-           handle = Meteor.subscribe('allshopcustomer',shopId); 
-         }
+  return  withTracker(params => {  
+     let  handle = Meteor.subscribe('allshopcustomer',params.screenProps.shopId); 
     return {
       loading: handle.ready(),
-      customers: Meteor.collection('shopcustomers').find(),
+      customers: Meteor.collection('shopcustomers').find({},{sort: {createdAt: -1},limit:20}),
     };
   })(HomeContainer);
 }

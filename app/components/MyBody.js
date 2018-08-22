@@ -49,8 +49,9 @@ const MyComponent = (props)=>{
       <Right>
          <Badge success >
             <Text onPress={()=>{
-              AsyncStorage.removeItem('shop_id',(err)=>{
-                props.navigation.navigate('Login')
+              AsyncStorage.removeItem('shopId',(err)=>{
+               // props.navigation.navigate('Login',{logout:true})
+                props.navigation.navigate('Invoice')
               })
             }}>Billing</Text>
         </Badge>

@@ -1,1 +1,4 @@
  ./emulator -avd rizwan -use-system-libs
+
+ sudo lsof -i :8081
+kill -9 23583
