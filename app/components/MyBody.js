@@ -47,14 +47,11 @@ const MyComponent = (props)=>{
       </Left>
         </TouchableWithoutFeedback>
       <Right>
+      <TouchableWithoutFeedback  onPress={()=>props.navigation.navigate('Invoice')}>
          <Badge success >
-            <Text onPress={()=>{
-              AsyncStorage.removeItem('shopId',(err)=>{
-               // props.navigation.navigate('Login',{logout:true})
-                props.navigation.navigate('Invoice')
-              })
-            }}>Billing</Text>
+            <Text >Billing</Text>
         </Badge>
+        </TouchableWithoutFeedback>
       </Right>
     </CardItem>
   )

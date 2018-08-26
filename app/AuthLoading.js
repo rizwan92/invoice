@@ -30,8 +30,8 @@ export class AuthLoading extends Component {
             this.props.navigation.navigate('Auth');
           }
         })
-        
       }
+      
     render() {
         if (!this.state.connect) {
             return  <Connect />

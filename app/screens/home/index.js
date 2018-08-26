@@ -103,9 +103,7 @@ class MyModal extends Component {
     const customerNumber = this.state.customerNumber.trim()
     if (customerNumber === '') {this.makeToast('Enter Customer Number');return;} 
     const customer = {customerName,customerNumber,shopId:this.props.shopId,createdAt:new Date()}
-
-    console.log(customer);
-
+    
     Meteor.call('shopcustomer.insert',customer,(err,res)=>{
       if (err) {
         this.makeToast(err.message)
