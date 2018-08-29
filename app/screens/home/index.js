@@ -22,7 +22,7 @@ class MainLayout extends Component {
       <Container>
        <Header style={{backgroundColor: '#4CAF50'}}>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={()=>this.props.navigation.openDrawer()}>
               <Icon name="menu" />
             </Button>
           </Left>

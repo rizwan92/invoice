@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {AsyncStorage,ScrollView, ActivityIndicator,Keyboard} from 'react-native'
-import {Toast,Container, Content, Text,View,Button,Input,Item} from 'native-base';
+import {AsyncStorage,ScrollView, ActivityIndicator,Keyboard,ToastAndroid} from 'react-native'
+import {Container, Content, Text,View,Button,Input,Item} from 'native-base';
 import Meteor from 'react-native-meteor';
 export default class LoginLayout extends Component {
   constructor(props){
@@ -22,12 +22,9 @@ export default class LoginLayout extends Component {
     this.setState({[id]:text})
   }
   makeToast=(msg)=>{
-    Toast.show({
-      text: msg,
-      textStyle: { color: "yellow" },
-    })  
+   ToastAndroid.show(msg, ToastAndroid.SHORT);
    }
-
+Toast
   handleLogin = ()=> {
     const email = this.state.email.trim()
     const password = this.state.password.trim()
@@ -35,10 +32,11 @@ export default class LoginLayout extends Component {
     if (password === '') {this.makeToast('Enter Password');return false;}
 
     this.setState({loading:true},()=>{
+      let that = this
       Meteor.call('shop.login',email,password,(err,res)=>{
         if (err) {
-          this.makeToast(err.message)
-          this.setState({loading:false})
+          that.makeToast(err.message)
+          that.setState({loading:false})
           return
         }else {
           AsyncStorage.setItem('shopId',res.result._id);

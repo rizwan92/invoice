@@ -6,7 +6,7 @@ import {  View, Text} from "native-base";
 
 // Meteor.connect('ws://127.0.0.1:3000/websocket'); 
 //Meteor.connect('ws://192.168.43.165:3000/websocket'); 
-Meteor.connect('ws://192.168.1.9:3000/websocket'); 
+Meteor.connect('ws://192.168.1.11:3000/websocket'); 
 
 export class AuthLoading extends Component {
 

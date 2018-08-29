@@ -6,15 +6,37 @@ import Search from './screens/search';
 import Customer from './screens/customer';
 import Login from './screens/login';
 import Registration from './screens/registration'
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator,createDrawerNavigator } from "react-navigation";
 import Loader from './components/Loader';
 import { AsyncStorage } from 'react-native'
-import { Root } from "native-base";
+import { Root,Icon } from "native-base";
+
+const MyApp = createDrawerNavigator({
+  Home: {
+    screen: Home,
+    navigationOptions:{
+      drawerLabel: 'Home',
+       drawerIcon: ({ tintColor }) => (
+       < Icon name = "home" / >
+    ),
+    }
+  },
+  Search: {
+    screen: Search,
+    navigationOptions: {
+      drawerLabel: 'Search',
+       drawerIcon: ({ tintColor }) => (
+       < Icon name = "search" / >
+    ),
+    }
+  },
+});
 
 
 const  AppNavigator =  createStackNavigator(
   {
-    Home: { screen: Home,
+    Home: {
+        screen: MyApp,
       navigationOptions: {header:null},
      },
       Invoice: { screen: Invoice,
@@ -62,7 +84,7 @@ const  AppNavigator =  createStackNavigator(
     }    
     return (
       <Root>
-      <AppNavigator screenProps={{shopId:this.state.shopId}} />
+      <MyApp screenProps={{shopId:this.state.shopId}} />
       </Root>
     )
    }
